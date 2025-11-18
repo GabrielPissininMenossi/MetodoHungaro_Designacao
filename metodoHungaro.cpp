@@ -1,46 +1,84 @@
 #include "auxiliares.h"
 
-void executar()
+int main()
 {
 	int ordem, matriz[TF][TF], matrizAux[TF][TF];
 	int minimoLinha[TF], minimoColuna[TF];
-	int qtdeZeroLinha[TF], qtdeZeroColuna[TF];
+	int qtdeZerosLinha[TF], qtdeZerosColuna[TF];
+	int designacoes[TF];
 	int qtdeLinhaMark, qtdeColunaMark;
-	
-	//variaveis inuteis
-	int linhas, colunas;
+	int linhas = 0, colunas = 0;
 	char vertices[TF];
 	
-	// ler a matriz do arquivo
+	//executar();
 	lerTxTMatrizAdjacencia(matriz, &ordem, &linhas, &colunas, vertices);
+	textcolor(3),printf ("Matriz Inicializada\n");
+	exibirMatriz(matriz, linhas, colunas, vertices);
 	
-	// achar os minimos da linha e refaz matriz
-	achaMinimoLinha(matriz, minimoLinha);
-	refazerMatrizMinimoLinha(matriz, minimoLinha);
+	printf ("\n");
+	textcolor(3),printf("Vetor de Minimos das Linhas\n");
+	achaMinimoLinha(matriz, minimoLinha, linhas, colunas);
+	exibirMinimo(minimoLinha, linhas);
+	textcolor(3),printf ("\nRefazendo a Matriz a Partir dos Minimos das Linhas\n");
+	refazerMatrizMinimoLinha(matriz, minimoLinha, linhas, colunas);
+	exibirMatriz(matriz, linhas, colunas, vertices);
 	
-	// achar os minimos da coluna e refaz matriz
-	achaMinimoColuna(matriz, minimoColuna);
-	refazerMatrizMinimoColuna(matriz, coluna);
+	printf ("\n");
+	textcolor(3),printf("Vetor de Minimos das Colunas\n");
+	achaMinimoColuna(matriz, minimoColuna, linhas, colunas);
+	exibirMinimo(minimoColuna, colunas);
+	textcolor(3),printf ("\nRefazendo a Matriz a Partir dos Minimos das Colunas\n");
+	refazerMatrizMinimoColuna(matriz, minimoColuna, linhas, colunas);
+	exibirMatriz(matriz, linhas, colunas, vertices);
 	
-	// contar os zeros das colunas e linhas
-	contarZeros(matriz, qtdeZeroLinha, qtdeZeroColuna);
+	printf ("\n");
 	
-	// marcar a coluna e linha -> entra lido e sai lido
-	marcarColunaELinha(matriz, qtdeZeroLinha, qtdeZeroColuna);
-	while(qtdeLinhaMark+qtdeColunaMark < ordem)
+	int i = 0;
+	do
 	{
-		refazerMatriz(matriz, matrizAux);
+		qtdeLinhaMark = qtdeColunaMark = 0;
+		inicializarMatriz(matrizAux, linhas);
+		inicializarVetor(qtdeZerosLinha, linhas);
+		inicializarVetor(qtdeZerosColuna, colunas);
+		contarZerosLinha(matriz, qtdeZerosLinha, linhas, colunas);
+		contarZerosColuna(matriz, qtdeZerosColuna, linhas, colunas);
 		
-		marcarColunaELinha(matriz, matrizAux, qtdeZeroLinha, qtdeZeroColuna);
-	}
-	
-	// marcar designacoes finais
-	marcarDesignacoes(matriz);
-}
+		textcolor(3), printf("---%d Iteracao---\n\n", i + 1);
+		
+		textcolor(3),printf ("Vetor de Zeros das Linhas\n");
+		exibirMinimo(qtdeZerosLinha, linhas);
+		printf ("\n");
+		
+		textcolor(3),printf ("Vetor de Zeros das Colunas\n");
+		exibirMinimo(qtdeZerosColuna, colunas);
+		printf ("\n\n");
+		
+		grifar(matriz, matrizAux, qtdeZerosLinha, qtdeZerosColuna, &qtdeLinhaMark, &qtdeColunaMark, linhas);
+		
+		textcolor(3),printf ("Matriz Grifada\n");
+		exibirMatrizGrifada(matrizAux, linhas, colunas, vertices);
+		printf ("\n");
 
-int main()
-{
-	executar();
+		refazerMatriz(matriz, matrizAux, linhas, colunas);
+		
+		textcolor(3),printf ("Matriz Reduzida\n");
+		exibirMatriz(matriz, linhas, colunas, vertices);
+		printf ("\n");
 	
+		i++;
+	} while(qtdeLinhaMark + qtdeColunaMark < linhas);
+	textcolor(3),printf ("--- FIM ---\n\n");
+	
+	//relatorio final
+	inicializarVetor(qtdeZerosLinha, linhas);
+	inicializarVetor(qtdeZerosColuna, colunas);
+	contarZerosLinha(matriz, qtdeZerosLinha, linhas, colunas);
+	contarZerosColuna(matriz, qtdeZerosColuna, linhas, colunas);
+	matrizFinal(matriz, designacoes, qtdeZerosLinha, qtdeZerosColuna, linhas);
+	textcolor(3),printf("### Resultado Final ###\n");
+	exibirMatrizFinal(matriz, linhas, colunas, vertices);
+
+	textcolor(7);
 	return 0;
 }
+
