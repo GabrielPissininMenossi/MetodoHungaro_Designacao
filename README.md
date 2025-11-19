@@ -123,7 +123,7 @@ Apenas precisa rodar, irá aparecer o resultado final no cmd:
  P3 [-1] [0] [5] [2]
  P4 [0] [1] [2] [4]
 ```
-## Apendice
+## Apêndice
 
 Aplicação do algoritmo método húngaro, para achar a solução ótima de uma designação qualquer. 
 Problema de Grafos, abordado na disciplina de Teoria dos Grafos, do sexto semestre do curso de Ciência da Computação da Unoeste (Universidade do Oeste Paulista) - FIPP (Faculdade de Informática de Presidente Prudente).
