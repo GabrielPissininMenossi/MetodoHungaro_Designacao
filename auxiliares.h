@@ -368,6 +368,7 @@ void retirarZerosLinha(int matriz[TF][TF], int ordem, int linha, int coluna)
 }
 void matrizFinal(int matriz[TF][TF], int designacoes[TF], int qtdeZerosLinha[TF], int qtdeZerosColuna[TF], int ordem)
 {
+	int qtdeDesignacoes = 0;
 	//inicializar o vetor com nada atribuido -1
 	for(int i=0; i<ordem; i++)
 	{
@@ -382,6 +383,7 @@ void matrizFinal(int matriz[TF][TF], int designacoes[TF], int qtdeZerosLinha[TF]
 			if(matriz[i][j] == 0 && qtdeZerosLinha[i] == 1 && qtdeZerosColuna[j] == 1) //unico da linha e coluna
 			{
 				designacoes[i] = j;
+				qtdeDesignacoes++;
 			}
 		}
 	}
@@ -394,6 +396,7 @@ void matrizFinal(int matriz[TF][TF], int designacoes[TF], int qtdeZerosLinha[TF]
 			if(matriz[i][j] == 0 && qtdeZerosColuna[j] == 1 && designacoes[i] == -1)
 			{
 				designacoes[i] = j;
+				qtdeDesignacoes++;
 
 				//preciso modificar a quantidade de zeros restantes na linha
 				retirarZerosLinha(matriz, ordem, i, j);
@@ -413,6 +416,7 @@ void matrizFinal(int matriz[TF][TF], int designacoes[TF], int qtdeZerosLinha[TF]
 			if(matriz[i][j] == 0 && qtdeZerosLinha[i] == 1 && designacoes[i] == -1)
 			{
 				designacoes[i] = j;
+				qtdeDesignacoes++;
 
 				//preciso modificar a quantidade de zeros restantes na coluna
 				retirarZerosColuna(matriz, ordem, i, j);
